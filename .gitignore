@@ -19,7 +19,7 @@ mvnw
 mvnw.cmd
 src/test/
 src/main/resources/*.yml
-.target/
+target/
 .project
 
 # External tool builders
