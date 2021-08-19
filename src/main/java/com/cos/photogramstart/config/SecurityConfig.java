@@ -19,15 +19,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		//csrf 토큰 때문에 페이지가 안열리니 비활성화 해둠
 		http.csrf().disable();
 		
 		//super 삭제 - 기존 시큐리티가 가지고 있는 기능이 다 비활성화 됨.
+		
+		
 		http.authorizeRequests()
 			.antMatchers("/","/user/**","/image/**","/subscribe/**","/comment/**").authenticated()//해당 주소만 인증이 필요
 			.anyRequest().permitAll()//허용함
 			.and()
 			.formLogin()
-			.loginPage("/auth/signin")
+			.loginPage("/auth/signin")			// GET 방식
+			.loginProcessingUrl("/auth/signin")	//POST 방식
 			.defaultSuccessUrl("/");
 	}
 }
