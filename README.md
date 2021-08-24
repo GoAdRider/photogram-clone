@@ -21,7 +21,9 @@
 
 
 [update.jsp 접근](./src/main/webapp/WEB-INF/views/user/update.jsp)
+
 [header.jsp 접근](./src/main/webapp/WEB-INF/views/layout/header.jsp)
+
 [update.js 접근](./src/main/resources/static/js/update.js )
 
 #### header.jsp
