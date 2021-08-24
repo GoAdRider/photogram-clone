@@ -31,9 +31,6 @@ public class UserService {
 		// 두번째 - 영속화된 오브젝트를 수정 - 더티체킹이 일어남(업데이트가 완료 됨)
 		// 영속화된 것 변경 시작
 		userEntity.setName(user.getUsername());
-		System.out.println("UserService 의 userEntity.getName() : "+userEntity.getName());
-		System.out.println("UserService 의 user.getName: "+user.getName());
-		System.out.println("UserService 의 user.getUsername: "+user.getUsername());
 		String rawPassword = user.getPassword();
 		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
 		userEntity.setPassword(encPassword);
