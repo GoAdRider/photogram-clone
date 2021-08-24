@@ -2,6 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
+
+<!-- 아래는 시큐리티 태그 라이브러리를 통해 사용가능함 pom.xml 확인 -->
+<sec:authorize access="isAuthenticated()"><!-- 인증된 정보에 접근하는 방법 ! : 백엔드단에서 Model 에 안넣어도 jsp 전역에서 사용 가능-->
+	<sec:authentication property="principal" var = "principal"/><!-- 키워드 : principal => 세션정보에 접근함 -->
+</sec:authorize>
+<!-- ${principal.user} => 이제 이렇게 사용하면 됨 ==> 그리고 이건 header.jsp 에 해주자!(header 는 계속 재활용되기 때문) -->
+
 <!DOCTYPE html>
 <html lang="en">
 
