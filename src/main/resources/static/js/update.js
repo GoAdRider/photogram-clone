@@ -16,6 +16,7 @@ function update(userId, event) {
 	}).done(res=>{
 		//res에 json을 javascript 로 parsing 해서 받음 : res 는 javascript 오브젝트임
 		console.log("update 성공");
+		location.href=`/user/${userId}`;
 	}).fail(error=>{
 		console.log("update 실패");
 	});
