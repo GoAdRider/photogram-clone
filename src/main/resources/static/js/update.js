@@ -21,11 +21,10 @@ function update(userId, event) {
 		console.log("update 성공",res);
 		location.href=`/user/${userId}`;
 	}).fail(error=>{//HttpStatus 상태코드 200번대가 아닐 때
-		if(error.data==null){
+		if(error.data==null){//500번대 에러(데이터가 넘어오지 않았을 때)
 			alert(error.responseJSON.message);
-		}else{
+		}else{//400번대 에러(요청을 잘 못했을 때)
 			alert(JSON.stringify(error.responseJSON.errorMap));
 		}
-//		alert(error.responseJSON.errorMap.name);
 	});
 }
