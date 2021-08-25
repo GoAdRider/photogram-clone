@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,8 +26,26 @@ public class UserService {
 		// findById : Optional<T> 객체임 => Optinal 이 지원해주는 것
 		// 1. 무조건 찾았다. 걱정마 get()
 		// 2. 못찾았어 Exception 발동시킬게 orElseThrow()
-		User userEntity = userRepository.findById(id).get(); // 나중에 orElseThrow() 로 바꿀 예정
-
+		
+		/*
+		1. 일반 식
+		User userEntity = userRepository.findById(id).orElseThrow(new Supplier<IllegalArgumentException>() {
+			
+			@Override
+			public IllegalArgumentException get() {
+				return new IllegalArgumentException("찾을 수 없는 id 입니다");
+			}
+		});
+		*/
+		
+		
+		// findById의 id 를 못찾았다면 Supplier 의 Exception 이 실행 됨
+		// 반환 값 : 찾을 수 없는 id입니다
+		// ControllExceptionHandler 로 낚아채서 하는 것이 직접 하는 것 보다 좋음. 
+		// 그래서 IllegalArgumentException 로 해도 될 것을 CustomValidationException 로 return 함
+		// ControllerExceptionHandlerd 에서 낚아 챌 때 CMRespDTO 에서 ErrorMap 이 없고 Message만 있으니 map은 null로 넘어감 하지만 괜찮음 
+		//2. 람다 식
+		User userEntity = userRepository.findById(id).orElseThrow(()->{ return new CustomValidationException("찾을 수 없는 id 입니다"); });
 		
 		// 두번째 - 영속화된 오브젝트를 수정 - 더티체킹이 일어남(업데이트가 완료 됨)
 		// 영속화된 것 변경 시작
