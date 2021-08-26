@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -44,5 +45,12 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<CMRespDto<?>> validationApiException(CustomValidationApiException e) {//CMRespDto<?> <- 제네릭 사용 ? 는 와일드카드임=> 즉 자동으로 CMRespDto<Map<String,String>> 으로 변환됨
 		System.out.println("ControllerExceptionHandler 호출");
 		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);//BAD_REQUEST : 400 번(요청을 잘 못했을 때)
+	}
+	
+	
+	@ExceptionHandler(CustomApiException.class)
+	public ResponseEntity<CMRespDto<?>> validationApiException(CustomApiException e) {
+		System.out.println("ControllerExceptionHandler 호출");
+		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),null),HttpStatus.BAD_REQUEST);
 	}
 }
