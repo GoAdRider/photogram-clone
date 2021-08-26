@@ -1,4 +1,4 @@
-# 인스타그램 클론 코딩 Ver.0.4.0
+# 인스타그램 클론 코딩 Ver.0.4.2
 
 ## 구현완료
 
@@ -10,60 +10,83 @@
 
 ### 수정된 부분
 
-> Subscribe 모델 만들기
-1. Subscribe.java 추가
-2. SubscribeRepository.java 추가
+> 구독, 구독취소 API 만들기
+1. 인터페이스 SubscribeRepository.java 에 NativeQuery 문 추가
+2. SubscribeService.java 생성 후 구독, 구독취소 메소드
+3. SubscribeApiController.java 생성
 
 ---
 
-### 1 Subscribe.java 추가
+### 1 인터페이스 SubscribeRepository.java 에 NativeQuery 문 추가
 
-[Subscribe.java 접근](./src/main/java/com/cos/photogramstart/domain/subscribe/Subscribe.java)
+[SubscribeRepository.java 접근](./src/main/java/com/cos/photogramstart/domain/subscribe/SubscribeRepository.java)
 
-> #### 데이터가 중복해서 들어오지 못하게 설정
-> 
-> <img src="https://user-images.githubusercontent.com/57707484/130954996-d060e0ac-7cb2-4e85-a8b8-2853f63dfb1b.png" width="30%" height="30%"/>
-> 
-> 3번의 데이터값과 1번의 데이터값이 중복된다. <br/>
-> 이렇게 들어오면 안되니 중복 데이터를 들어오지 못하게 설정해줘야한다
-
+> DB 가 변경되는 값을 넣어줄때는 항상 @Modifying 어노테이션을 넣어줘야 한다
+> 즉 , INSERT, DELETE, UPDATE 를 네이티브 쿼리로 작성하려면 @Modifying 어노테이션이 필요!
 
 ```java
-@Table(uniqueConstraints = {
-		@UniqueConstraint(
-				name="subscribe_uk",
-				columnNames= {"fromUserId","toUserId"}//실제 DB 의 컬럼명을 기재해줘야함
-		)
-})
-public class Subscribe
-...
-```
-<br/>
+	@Modifying
+	@Query(value="INSERT INTO subscribe(fromUserId, toUserId, createDate) VALUES(:fromUserId, :toUserId, now())",nativeQuery=true)
+	void mSubscribe(int fromUserId, int toUserId);
 
-> 실제 DB 에 들어가는 컬럼명 지정 @JoinColumn
-> 관계설정 @ManyToOne
-> 
-> @ManytoOne 으로 Subscribe 테이블 생성과 동시에 FK 지정 ( User 테이블과 관계설정 )
-<img width="461" alt="1" src="https://user-images.githubusercontent.com/57707484/130954429-31901092-46dc-4e72-9dd5-ff176ffb1e45.PNG">
-
-<br/>
-
-```java
-	@JoinColumn(name="fromUserId")
-	@ManyToOne
-	private User fromUser;
-
-	@JoinColumn(name="toUserId")
-	@ManyToOne
-	private User toUser;
+	@Modifying
+	@Query(value="DELETE FROM subscribe WHERE fromUserId=:fromUserId AND toUserId = :toUserId",nativeQuery=true)
+	void mUnSubscribe(int fromUserId, int toUserId);
 ```
 
 <br/><br/>
 
+### 2 SubscribeService.java 생성 후 구독, 구독취소 메소드
 
-### 2 SubscribeRepository.java 추가
+[SubscribeService.java 접근](./src/main/java/com/cos/photogramstart/service/SubscribeService.java)
 
-[SubscribeRepository.java 접근](./src/main/java/com/cos/photogramstart/domain/subscribe/SubscribeRepository.java)
+```java
+@RequiredArgsConstructor
+@Service
+public class SubscribeService {
+
+	private final SubscribeRepository subscribeRepository;
+	
+	@Transactional
+	public void 구독하기(int fromUserId, int toUserId) { 
+		subscribeRepository.mSubscribe(fromUserId, toUserId);	//mSubscribe 에서 m은 "내가 만들었다"의 약어
+	}
+
+	@Transactional
+	public void 구독취소하기(int fromUserId, int toUserId) {
+		subscribeRepository.mUnSubscribe(fromUserId, toUserId);
+	}
+}
+```
+
+<br/><br/>
+
+### 3 SubscribeApiController.java 생성
+
+[SubscribeApiController.java 접근](./src/main/java/com/cos/photogramstart/web/api/SubscribeApiController.java)
+
+> 나중에 내부적으로 문제 생길 시 try..catch throw 를 통해 익셉션 던질 예정
+
+```java
+@RequiredArgsConstructor
+@RestController
+public class SubscribeApiController {
+
+	private final SubscribeService subscribeSerice;
+
+	@PostMapping("/api/subscribe/{toUserId}")
+	public ResponseEntity<?> subscribe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId){
+		subscribeSerice.구독하기(principalDetails.getUser().getId(), toUserId);
+		return new ResponseEntity<>(new CMRespDto<>(1,"구독하기 성공",null),HttpStatus.OK);// 무조건 성공(1)
+	}
+
+	@DeleteMapping("/api/subscribe/{toUserId}")
+	public ResponseEntity<?> unsubscribe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId){
+		subscribeSerice.구독취소하기(principalDetails.getUser().getId(), toUserId);
+		return new ResponseEntity<>(new CMRespDto<>(1,"구독취소하기 성공",null),HttpStatus.OK);
+	}
+}
+```
 
 <br/><br/>
 
