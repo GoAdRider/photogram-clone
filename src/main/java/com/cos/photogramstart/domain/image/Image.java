@@ -27,12 +27,12 @@ public class Image {	// User 와의 관계 : Image --(Many2One) --> User
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	// 번호 증가 전략 : 데이터베이스를 따라간다.
 	private int id;
 	
-	private String caption; 		// 오늘 나 너무 피곤해 !!
+	private String caption; 		// "오늘 나 너무 피곤해 !!"
 	private String postImageUrl; 	// 사진을 전송받아서 그 사진을 서버에 특정 폴더에 저장 - DB 에 그 저장된 경로를 Insert !
 	
 	@JoinColumn(name="userId")
 	@ManyToOne
-	private User user;
+	private User user; // 객체가 들어왔으니 연관관계 정해주기
 	
 	// 기능 업데이트 할 사항
 		// - 이미지 좋아요
