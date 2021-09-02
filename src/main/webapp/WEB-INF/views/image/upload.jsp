@@ -31,7 +31,7 @@
                     	<!-- 그래서 multipart/form-data 로 인코딩 타입해줘야 한다  -->
                     	<!-- multipart/form-data : 여러종류의 타입을 묶어서 전송할 때 사용하는 인코딩 타입 -->
                     	<!-- 여기서는 key:value 타입과 file 타입을 묶어서 보내야해서 사용한다 -->
-                   		 <input type="text" placeholder="사진설명" name="caption"/> 
+                   		 <input type="text" placeholder="사진설명" name="caption" required="required"/> 
                         <button class="cta blue">업로드</button>
                     </div>
                     <!--사진설명end-->
