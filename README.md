@@ -56,12 +56,14 @@ public <S extends T> S save(S entity) {
 }
 ```
 
+<br/>
+
 <details>
   <summary> Detail 하게 알아보려면? </summary>
 	<a href="https://velog.io/@rainmaker007/spring-data-jpa-save-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC">spring-data-jpa save 동작 원리-Simple is best. 백엔드개발자</a>
 </details>
 
-<br/><br/>
+<br/>
 
 ### 2 ImageUploadDto.java 에 toEntity 에 필요 파라미터, DB에 저장할 부분(캡션,이미지가 저장되는 주소, 업로드하는 사람) 추가
 
