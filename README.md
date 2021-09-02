@@ -58,9 +58,7 @@ public <S extends T> S save(S entity) {
 
 <details>
   <summary> Detail 하게 알아보려면? </summary>
-	
-	[spring-data-jpa save 동작 원리-Simple is best. 백엔드개발자](https://velog.io/@rainmaker007/spring-data-jpa-save-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC)
-  
+	<a href="https://velog.io/@rainmaker007/spring-data-jpa-save-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC">spring-data-jpa save 동작 원리-Simple is best. 백엔드개발자</a>
 </details>
 
 <br/><br/>
