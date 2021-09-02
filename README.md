@@ -1,4 +1,4 @@
-# 인스타그램 클론 코딩 Ver.0.5.3
+# 인스타그램 클론 코딩 Ver.0.5.4
 
 ## 구현완료
 
@@ -10,80 +10,67 @@
 
 ### 수정된 부분
 
-> #### Image DB에 업로드
+> #### Image 유효성 검사
 
->1. ImageService.java 에서 받은 데이터를 Image 테이블에 저장
->2. ImageUploadDto.java 에 toEntity 에 필요 파라미터, DB에 저장할 부분(캡션,이미지가 저장되는 주소, 업로드하는 사람) 추가
+> 1. ImageController.java 에서 file 에 대한 Validation 작업 추가 (파일 유효성 검사)
+> 2. ControllerExceptionHandler.java 에서 errorMap 의 null 값 분기
 
 ---
 
 <br/>
 
-### 1 ImageService.java 에서 받은 데이터를 Image 테이블에 저장
+### 1. ImageController.java 에서 file 에 대한 Validation 작업 추가 (파일 유효성 검사)
 
-[ImageService.java 접근](./src/main/java/com/cos/photogramstart/service/ImageService.java)
+[ImageController.java 접근](./src/main/java/com/cos/photogramstart/web/ImageController.java)
+
+> 이미지가 첨부되지 않았을 때 Server 에서 Validation 체크가 필요하다.
+> 
+> ImageUploadDto.java 에서 MultipartFile file; 에 @NotBlank 를 넣으면 될 것 같지만
+> 
+> 멀티파일 타입에는 @NotBlank 어노테이션 지원이 안 된다고 한다.
+> 
+> 그렇기에 Presentaion Layer 인 Controller 에서 작업을 해야한다.
 
 ```java
-// image 테이블에 저장
-Image image = imageUploadDto.toEntity(imageFileName,principalDetails.getUser());
-Image imageEntity = imageRepository.save(image);
+@PostMapping("/image")
+public String imageUpload(ImageUploadDto imageUploadDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+	if(imageUploadDto.getFile().isEmpty()) {
+		throw new CustomValidationException("이미지가 첨부되지 않았습니다");
+	}
 ```
 
 <br/>
 
-#### `.save` 를 호출 시?
-
-
-* entity 가 새로 생성할 예정이라면 `persist()` 를 호출하고, 그렇지 않다면 `merge()` 를 호출합니다.
-
-```java
-SimpleJpaRepository.java
-
-/*
- * (non-Javadoc)
- * @see org.springframework.data.repository.CrudRepository#save(java.lang.Object)
- */
-@Transactional
-@Override
-public <S extends T> S save(S entity) {
-
-	if (entityInformation.isNew(entity)) {
-		em.persist(entity);
-		return entity;
-	} else {
-		return em.merge(entity);
-	}
-}
-```
+#### 하지만 위 와같이 작성만 하고 끝내면...
 
 <br/>
 
-<details>
-  <summary> Detail 하게 알아보려면? </summary>
-	<a href="https://velog.io/@rainmaker007/spring-data-jpa-save-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC">spring-data-jpa save 동작 원리-Simple is best. 백엔드개발자</a>
-</details>
+![image](https://user-images.githubusercontent.com/57707484/131846612-718b90db-4d81-4653-a390-f656ab9a3f01.png)
 
-<br/>
+> 이 처럼 에러창이 뜬다.
 
-### 2 ImageUploadDto.java 에 toEntity 에 필요 파라미터, DB에 저장할 부분(캡션,이미지가 저장되는 주소, 업로드하는 사람) 추가
+<br/><br/>
 
-[ImageUploadDto.java 접근](./src/main/java/com/cos/photogramstart/web/dto/image/ImageUploadDto.java)
+### 2. ControllerExceptionHandler.java 에서 errorMap 의 null 값 분기
 
+[ControllerExceptionHandler.java 접근](src/main/java/com/cos/photogramstart/handler/ControllerExceptionHandler.java)
+
+> 1번 에서 난 에러는 `ControllerExceptionHandler.java` 에서 `CustomValidationException.java` 의  
+> 
+> `errorMap` 에 대한 null 값이 존재하였기에 발생하였다. 
+> 
+> `ControllerExceptionHandler.java` 에서 errorMap 에 대한 null 값 분기를 하였다.
 
 ```java
-@Data
-public class ImageUploadDto {
-	private MultipartFile file;
-	private String caption;
-	
-	public Image toEntity(String postImageUrl, User user) {
-		return Image.builder()
-				.caption(caption)
-				.postImageUrl(postImageUrl)
-				.user(user)
-				.build();
+	@ExceptionHandler(CustomValidationException.class)
+	public String validationException(CustomValidationException e) {
+		if(e.getErrorMap()==null) {
+			return Script.back(e.getMessage());
+		}else {
+			return Script.back(e.getErrorMap().toString());
+		}
 	}
-}
 ```
 
 <br/><br/>
