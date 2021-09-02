@@ -35,7 +35,16 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(CustomValidationException.class)
 	public String validationException(CustomValidationException e) {
 		System.out.println("ControllerExceptionHandler 호출");
-		return Script.back(e.getErrorMap().toString());//파라미터에 map 이 있으니 <> 안에도 Map 이 있어야함
+		
+		// 파일을 보내지 않을 때 서버측에서 Validation 이 필요하다
+		// ImageUploadDto 에서 @NotBlank 를 걸려고 했으나 멀티파일 타입에는 이 어노테이션이 지원이 안된다.
+		// ImageController 에서 file이 안 들어왔을 때 익셉션을 던졌으나
+		// errorMap 에 대한 null 이 존재하였기에 이 곳에서 errorMap 에 대한 분기가 필요하였다.
+		if(e.getErrorMap()==null) {
+			return Script.back(e.getMessage());
+		}else {
+			return Script.back(e.getErrorMap().toString());//파라미터에 map 이 있으니 <> 안에도 Map 이 있어야함
+		}
 	}
 	
 	//ResponseEntity<> : Http 상태코드와 같이 응답으로 넘기는 방식
