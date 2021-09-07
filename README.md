@@ -31,6 +31,20 @@
 > #### UserService, UserController 를 보면 될 것이라 생각했지만 아마 조금 더 근본적인 곳에서 발생하는 것 같습니다.<br/>
 > #### 그래서 로그인 시도시 발동하는 PrincipalDetailsService 와 PrincipalDetails 를 확인 해보았으나 아직까진 잘 모르겠습니다.
 
+<br/><br/>
+
+## 실제 화면
+
+![image](https://user-images.githubusercontent.com/57707484/132376055-8cdb32aa-ab95-4d47-bf5c-1ed150af36d3.png)
+
+<br/>
+
+> 위 로그인 화면은 잘 나오나 로그인 실행 시 아래와 같은 오류 화면으로 넘어가진다
+
+<br/>
+
+![image](https://user-images.githubusercontent.com/57707484/132376144-6939926c-9968-4a79-be41-d1c141148c86.png)
+
 
 <br/><br/>
 
