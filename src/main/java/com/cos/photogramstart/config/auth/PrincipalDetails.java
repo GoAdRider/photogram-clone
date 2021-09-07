@@ -32,6 +32,7 @@ public class PrincipalDetails implements UserDetails {
 	//user 면 user 권한, admin이면 admin 권한
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {//권한을 가져오는 함수 => User 객체에 role 이 들고있음
+		
 		Collection<GrantedAuthority> collector = new ArrayList<>();
 		
 		

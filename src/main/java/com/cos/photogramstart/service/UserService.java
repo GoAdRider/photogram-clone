@@ -21,7 +21,8 @@ public class UserService {
 	
 	public User 회원프로필(int userId) { // "/user/{id}" 의 id를 가져옴 ex. 1, 2, 3, ...  (유저 인덱스)
 		// SELECT * FROM image WHERE userId = :userId; 
-		User userEntity = userRepository.findById(userId).orElseThrow(()-> {throw new CustomException("해당 프로필 페이지는 없는 페이지입니다."); });
+		User userEntity = userRepository.findById(userId).orElseThrow(()-> {return new CustomException("해당 프로필 페이지는 없는 페이지입니다."); });
+		
 		return userEntity;
 	}
 	

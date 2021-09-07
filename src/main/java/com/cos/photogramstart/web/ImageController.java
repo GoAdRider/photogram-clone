@@ -39,7 +39,7 @@ public class ImageController {
 		if(imageUploadDto.getFile().isEmpty()) {
 			//이미지가 첨부되지 않았을 때
 			//data 가 아닌 page 로 응답할 것이기 때문에 CustomValidationApiException 이 아닌 CustomValidationException 으로 던진다
-			throw new CustomValidationException("이미지가 첨부되지 않았습니다");
+			throw new CustomValidationException("이미지가 첨부되지 않았습니다",null);
 		}
 		
 		//서비스 호출
