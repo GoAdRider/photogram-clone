@@ -39,6 +39,7 @@
 > #### `UserService.java` 에서 **@Transaction 확인** , `UserController.java` 에서 **System.out.println** 을 확인 해봤지만 이상없습니다<br/>
 > #### 그래서 로그인 시도시 발동하는 `PrincipalDetailsService.java` 의 **loadUserByUsername()** 와 <br/>
 > #### `PrincipalDetails.java` 의 **getAuthorities()** 를 찍어보았고 제대로 타고있음을 확인했습니다.<br/>
+> #### 또한 `ImageController.java` 의 **story()** 도 로그로 확인해 보았으며 잘 타고있음을 확인했습니다.
   
 <br/><br/>
   
