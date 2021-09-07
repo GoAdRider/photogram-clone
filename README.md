@@ -36,8 +36,14 @@
 
 <br/><br/>
 
-> #### UserService, UserController 를 보면 될 것이라 생각했지만 아마 조금 더 근본적인 곳에서 발생하는 것 같습니다.<br/>
-> #### 그래서 로그인 시도시 발동하는 PrincipalDetailsService 와 PrincipalDetails 를 확인 해보았으나 아직까진 잘 모르겠습니다.
+> #### `UserService.java` 에서 **@Transaction 확인** , `UserController.java` 에서 **System.out.println** 을 확인 해봤지만 이상없습니다<br/>
+> #### 그래서 로그인 시도시 발동하는 `PrincipalDetailsService.java` 의 **loadUserByUsername()** 와 <br/>
+> #### `PrincipalDetails.java` 의 **getAuthorities()** 를 찍어보았고 제대로 타고있음을 확인했습니다.<br/>
+  
+<br/><br/>
+  
+> #### `UserService.java`, `AuthService.java`, `ImageService.java`, `SubscribeService.java` 의 모든 메소드에
+> #### @Transactional 이 붙어있는지 확인<br/>
 
 <br/><br/>
 
