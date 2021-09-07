@@ -4,20 +4,31 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class UserController {
+	
+	
+	private final UserService userService;
 	
 	
 	//사람마다 다를수 있으니 
 	//  "/user/profile"로 매핑받지 말고
 	//  "/user/{id}" 로 매핑받는다
 	@GetMapping("/user/{id}")
-	public String profile(@PathVariable int id) {
+	public String profile(@PathVariable int id, Model model) { // 화면에 뿌려줄 이미지 정보를 운반하기 위해 Model 이 필요
+		User userEntity = userService.회원프로필(id);
+		model.addAttribute("user",userEntity);
 		return "user/profile";
 		
 	}

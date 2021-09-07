@@ -8,6 +8,10 @@ public class CustomValidationApiException extends RuntimeException {
 	
 	private Map<String, String> errorMap;
 	
+	public CustomValidationApiException(String message) {
+		super(message);
+		System.out.println("CustomValidationApiException 호출");
+	}
 	public CustomValidationApiException(String message, Map<String, String> errorMap) {
 		super(message);
 		this.errorMap = errorMap;
