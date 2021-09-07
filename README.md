@@ -15,9 +15,17 @@
 
 <br/><br/>
 
-> #### 아직 46강에서 발생한 error 를 잡지 못한 상황입니다.<br/>
+> #### 아직 46강에서 발생한 error 를 잡지 못한 상황입니다. (브랜치 버전으로는 ver.0.5.5 부터 발생) <br/>
 > ![image](https://user-images.githubusercontent.com/57707484/132374594-fc65ac8d-358d-4671-88e5-c084276b9eff.png) <br/>
 > #### 위 에러까지 잡고 이 페이지를 정리할 예정입니다.
+
+<br/><br/>
+
+> #### 위 에러 메시지는 `User.java` 의 `images` 부분 `fetch=FetchType.LAZY` 를 적용하고부터 발생했습니다. (ver.0.5.5 부터)
+> ```java
+>@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+>private List<Image> images;
+> ```
 
 <br/><br/>
 
