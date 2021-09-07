@@ -150,7 +150,7 @@ public class CustomException extends RuntimeException{
 >
 > `fetch` 란?<br/>
 > `Lazy (지연로딩)` = User 를 Select 할 때 해당 User id 로 등록 된 image 들을 가져오지 마 ! <br/>
-> - 대신!! `getImages()` 함수의 image 들이 호출 될 때 가져 와 !<br/>
+> 　　　　　　　　　　　　　　　- 대신!! `getImages()` 함수의 image 들이 호출 될 때 가져 와 !<br/>
 > `Eager (즉시로딩)` = User 를 Select 할 때 해당 User id 로 등록 된 Image 들을 전부 Join 해서 가져 와 !
 
 ```java
@@ -166,8 +166,10 @@ public class CustomException extends RuntimeException{
 >
 > DB 에서 String 은 Varchar2 , int 는 Number 타입이다.<br/>
 > 그러나 java 의 List 와 같이 DB 에서는 Collection 을 관리해주는 타입은 없다<br/>
->  `mappedBy` 를 사용하면 위에서 말한 **의미 1** 의 내용처럼 테이블에 칼럼을 만들지 않기에 error 가 나지 않는다.<br/>
+>  `mappedBy` 를 사용하면 위에서 말한 **`mappedBy` 의미 1** 의 내용처럼 테이블에 칼럼을 만들지 않기에 error 가 나지 않는다.<br/>
 >  그러나 `mappedBy` 를 사용하지 않았을 시 이런 error 메시지가 뜬다.
+
+<br/>
 
 ![image](https://user-images.githubusercontent.com/57707484/132331788-0f56e697-9010-4929-995c-4ab82b4d96fe.png)
 
