@@ -1,16 +1,14 @@
 package com.cos.photogramstart.web;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
-import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.service.UserService;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,10 +23,11 @@ public class UserController {
 	//사람마다 다를수 있으니 
 	//  "/user/profile"로 매핑받지 말고
 	//  "/user/{id}" 로 매핑받는다
-	@GetMapping("/user/{id}")
-	public String profile(@PathVariable int id, Model model) { // 화면에 뿌려줄 이미지 정보를 운반하기 위해 Model 이 필요
-		User userEntity = userService.회원프로필(id);
-		model.addAttribute("user",userEntity);
+	// "/user/{id}" -> "/user/{pageUserId}" 로 변경
+	@GetMapping("/user/{pageUserId}")
+	public String profile(@PathVariable int pageUserId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) { // 화면에 뿌려줄 이미지 정보를 운반하기 위해 Model 이 필요
+		UserProfileDto dto = userService.회원프로필(pageUserId, principalDetails.getUser().getId());
+		model.addAttribute("user",dto);
 		return "user/profile";
 		
 	}
@@ -63,13 +62,13 @@ public class UserController {
 	@GetMapping("/user/{id}/update")
 	public String update(@PathVariable int id, @AuthenticationPrincipal PrincipalDetails principalDetails) { 
 		// 1. 어노테이션을 활용해서 얻은 세션 -> User 
-		System.out.println("세션정보 : "+ principalDetails.getUser());
+//		System.out.println("세션정보 : "+ principalDetails.getUser());
 		
 		// 2. 직접 객체로 찾아가서 얻은 세션 -> User
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		
-		System.out.println("직접찾은 세션 정보" +mPrincipalDetails.getUser());
+//		System.out.println("직접찾은 세션 정보" +mPrincipalDetails.getUser());
 		
 		
 		return "user/update";

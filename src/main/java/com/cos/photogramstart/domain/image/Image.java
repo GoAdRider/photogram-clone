@@ -44,4 +44,13 @@ public class Image {	// User 와의 관계 : Image --(Many2One) --> User
 	public void createDate() {
 		this.createDate = LocalDateTime.now();
 	}
+
+	// 오브젝트를 콘솔에 출력할 때 문제가 될수 있기에 User 부분을 출력되지 않게 함. user 변수 제외함
+//	@Override
+//	public String toString() {
+//		return "Image [id=" + id + ", caption=" + caption + ", postImageUrl=" + postImageUrl
+//				+ ", createDate=" + createDate + "]";
+//	}
+	
+	
 }

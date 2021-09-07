@@ -8,6 +8,7 @@ import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,11 +20,17 @@ public class UserService {
 	//패스워드를 위해서 bcrypt 해줘야한다. 안그러면 시크릿 코드(암호화) 없이 그냥 패스워드로 들어가게된다
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	public User 회원프로필(int userId) { // "/user/{id}" 의 id를 가져옴 ex. 1, 2, 3, ...  (유저 인덱스)
-		// SELECT * FROM image WHERE userId = :userId; 
-		User userEntity = userRepository.findById(userId).orElseThrow(()-> {return new CustomException("해당 프로필 페이지는 없는 페이지입니다."); });
+	@Transactional(readOnly=true) // 읽기 전용 데이터라서 영속성컨텍스트가 바뀌었는지 아닌지 확인 안함 ( 변경감지 연산을 안하기에 응답 속도는 더 빨라지겠지 )
+	public UserProfileDto 회원프로필(int pageUserId, int principalId) { // "/user/{id}" 의 id를 가져옴 ex. 1, 2, 3, ...  (유저 인덱스)
+		UserProfileDto dto = new UserProfileDto();
 		
-		return userEntity;
+		// SELECT * FROM image WHERE userId = :userId; 
+		User userEntity = userRepository.findById(pageUserId).orElseThrow(()-> {return new CustomException("해당 프로필 페이지는 없는 페이지입니다."); });
+		
+		dto.setUser(userEntity);
+		dto.setPageOwnerState(pageUserId == principalId);	// true 는 페이지 주인, false 는 주인이 아님
+		dto.setImageCount(userEntity.getImages().size());
+		return dto;
 	}
 	
 	// 회원 수정이 일어나는거니까 Transactional 붙여줌
