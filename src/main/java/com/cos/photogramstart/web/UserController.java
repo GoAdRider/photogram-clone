@@ -27,7 +27,7 @@ public class UserController {
 	@GetMapping("/user/{pageUserId}")
 	public String profile(@PathVariable int pageUserId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) { // 화면에 뿌려줄 이미지 정보를 운반하기 위해 Model 이 필요
 		UserProfileDto dto = userService.회원프로필(pageUserId, principalDetails.getUser().getId());
-		model.addAttribute("user",dto);
+		model.addAttribute("dto",dto);
 		return "user/profile";
 		
 	}

@@ -53,10 +53,10 @@ public class AuthController {
 			}
 			throw new CustomValidationException("유효성 검사 실패",errorMap);
 		}else {
-			log.info(signupDto.toString());
+//			log.info(signupDto.toString());
 			User user = signupDto.toEntity();
 			User userEntity = authService.회원가입(user);
-			log.info(userEntity.toString());
+//			log.info(userEntity.toString());
 			return "auth/signin";
 		}
 	}

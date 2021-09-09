@@ -60,7 +60,7 @@ public class User {
 	// Lazy (지연로딩) = User 를 Select 할 때 해당 User id 로 등록 된 image 들을 가져오지 마 ! 
 	//						- 대신!! getImages() 함수의 image 들이 호출 될 때 가져 와 !
 	// Eager (즉시로딩) = User 를 Select 할 때 해당 User id 로 등록 된 Image 들을 전부 Join 해서 가져 와 !
-	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"user"})
 	private List<Image> images;
 	

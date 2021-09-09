@@ -9,6 +9,6 @@ public class CustomApiException extends RuntimeException {
 	
 	public CustomApiException(String message) {
 		super(message);
-		System.out.println("CustomApiException 호출");
+//		System.out.println("CustomApiException 호출");
 	}
 }
