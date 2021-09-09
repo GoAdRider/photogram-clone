@@ -127,8 +127,8 @@ public class CustomException extends RuntimeException{
 |객체간 관계|User|Subscribe|Image|
 |:-:|:-:|:-:|:-:|
 |User|OneToOne|OneToMany|**OneToMany**|
-|Subscribe|ManyToOne|ManyToMany|X|
-|Image|ManyToOne|X|ManyToMany|
+|Subscribe|ManyToOne|X|X|
+|Image|ManyToOne|X|X|
 
 <br/>
 
