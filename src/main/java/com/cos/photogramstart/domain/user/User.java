@@ -17,8 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 //JPA - Java Persistence API(자바로 데이터를 영구적으로 저장할 수 있는 API를 제공)
 
@@ -26,7 +28,8 @@ import lombok.NoArgsConstructor;
 @Builder	// Builder 패턴
 @AllArgsConstructor	// 전체 생성자
 @NoArgsConstructor	// 빈 생성자
-@Data
+@Getter
+@Setter
 @Entity // 디비에 테이블을 생성
 public class User {
 	
@@ -60,7 +63,7 @@ public class User {
 	// Lazy (지연로딩) = User 를 Select 할 때 해당 User id 로 등록 된 image 들을 가져오지 마 ! 
 	//						- 대신!! getImages() 함수의 image 들이 호출 될 때 가져 와 !
 	// Eager (즉시로딩) = User 를 Select 할 때 해당 User id 로 등록 된 Image 들을 전부 Join 해서 가져 와 !
-	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({"user"})
 	private List<Image> images;
 	

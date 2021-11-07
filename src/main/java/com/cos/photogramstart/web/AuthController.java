@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 	
 	
-	private static final Logger log = LoggerFactory.getLogger(AuthController.class);
+//	private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 	
  	private final AuthService authService;
 	
