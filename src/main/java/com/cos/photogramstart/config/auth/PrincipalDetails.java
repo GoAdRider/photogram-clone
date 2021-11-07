@@ -10,7 +10,6 @@ import com.cos.photogramstart.domain.user.User;
 
 import lombok.Data;
 
-
 @Data
 public class PrincipalDetails implements UserDetails {
 

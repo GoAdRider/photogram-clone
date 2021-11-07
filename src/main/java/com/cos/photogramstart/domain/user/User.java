@@ -16,16 +16,17 @@ import com.cos.photogramstart.domain.image.Image;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //JPA - Java Persistence API(자바로 데이터를 영구적으로 저장할 수 있는 API를 제공)
-
 
 @Builder	// Builder 패턴
 @AllArgsConstructor	// 전체 생성자
 @NoArgsConstructor	// 빈 생성자
-@Data
+@Getter
+@Setter
 @Entity // 디비에 테이블을 생성
 public class User {
 	
