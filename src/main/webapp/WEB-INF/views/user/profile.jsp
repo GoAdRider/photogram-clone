@@ -65,7 +65,7 @@
 				<!--아이템들-->
 				<c:forEach var="image" items="${user.images}"><!-- EL 표현식에서 변수명을 적으면 get함수가 자동 호출 된다. -->
 					<div class="img-box">
-						<a href=""> <img src="${image.postImageUrl}" />
+						<a href=""> <img src="/upload/${image.postImageUrl}" />
 						</a>
 						<div class="comment">
 							<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
