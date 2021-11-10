@@ -10,7 +10,7 @@
 
 ### <div align="center"> - 현재 -</div>
 
-### <div align="center">Ver.0.5.6</div>
+### <div align="center">Ver.0.5.7</div>
 
 
 

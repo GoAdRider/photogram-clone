@@ -27,11 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 			.antMatchers("/","/user/**","/image/**","/subscribe/**","/comment/**","/api/**").authenticated()//해당 주소만 인증이 필요
-			.anyRequest().permitAll()//허용함
+			.anyRequest().permitAll()//위 주소 제외한 부분은 다 허용함
 			.and()
-			.formLogin()
-			.loginPage("/auth/signin")			// GET 방식
+			.formLogin()						// <form> 태그있는 form 로그인 
+			.loginPage("/auth/signin")			// GET 방식 : (파라미터)form 로그인이 있는 페이지
 			.loginProcessingUrl("/auth/signin")	//POST 방식
-			.defaultSuccessUrl("/");
+			.defaultSuccessUrl("/");			// 로그인이 성공했으면 / url 로 가게 함
 	}
 }

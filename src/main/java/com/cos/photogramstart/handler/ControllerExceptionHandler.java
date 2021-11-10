@@ -35,7 +35,7 @@ public class ControllerExceptionHandler {
 	//javascript 코드를 만들어서 뿌려주는 방식
 	@ExceptionHandler(CustomValidationException.class)
 	public String validationException(CustomValidationException e) {
-		System.out.println("ControllerExceptionHandler 호출");
+//		System.out.println("ControllerExceptionHandler 호출");
 		
 		// 파일을 보내지 않을 때 서버측에서 Validation 이 필요하다
 		// ImageUploadDto 에서 @NotBlank 를 걸려고 했으나 멀티파일 타입에는 이 어노테이션이 지원이 안된다.
@@ -49,7 +49,7 @@ public class ControllerExceptionHandler {
 	}
 	@ExceptionHandler(CustomException.class)
 	public String exception(CustomException e) {
-		System.out.println("ControllerExceptionHandler 호출");
+//		System.out.println("ControllerExceptionHandler 호출");
 		return Script.back(e.getMessage());
 	}
 	
@@ -58,14 +58,14 @@ public class ControllerExceptionHandler {
 	// 데이터 리턴 방식 (Ajax 에서 사용)
 	@ExceptionHandler(CustomValidationApiException.class)
 	public ResponseEntity<CMRespDto<?>> validationApiException(CustomValidationApiException e) {//CMRespDto<?> <- 제네릭 사용 ? 는 와일드카드임=> 즉 자동으로 CMRespDto<Map<String,String>> 으로 변환됨
-		System.out.println("ControllerExceptionHandler 호출");
+//		System.out.println("ControllerExceptionHandler 호출");
 		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);//BAD_REQUEST : 400 번(요청을 잘 못했을 때)
 	}
 	
 	
 	@ExceptionHandler(CustomApiException.class)
 	public ResponseEntity<CMRespDto<?>> validationApiException(CustomApiException e) {
-		System.out.println("ControllerExceptionHandler 호출");
+//		System.out.println("ControllerExceptionHandler 호출");
 		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),null),HttpStatus.BAD_REQUEST);
 	}
 }

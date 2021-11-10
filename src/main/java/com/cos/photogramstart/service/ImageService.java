@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
@@ -24,11 +25,12 @@ public class ImageService {
 	@Value("${file.path}")//@Value 로 application.yml 에 있는 file.path 의 값을 가져올 수 있다.
 	private String uploadFolder;
 	
+	@Transactional
 	public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
 		//파일 명 중복을 막음.. DB 에 똑같은 파일명이 저장 될 수도 있다. 그러면 덮어쓰기가 되므로 중복되지 않을 수 있게 지정해줘야한다.
 		UUID uuid = UUID.randomUUID();//네트워크 상에서 고유성이 보장되는 id 를 만들기 위한 표준 규약 Universally Unique Identifier
 		String imageFileName = uuid+"_"+imageUploadDto.getFile().getOriginalFilename();	// 1.jpg
-		System.out.println("이미지 파일 이름 : "+imageFileName);
+//		System.out.println("이미지 파일 이름 : "+imageFileName);
 		
 		Path imageFilePath = Paths.get(uploadFolder+imageFileName);
 		
@@ -41,9 +43,9 @@ public class ImageService {
 		
 		// image 테이블에 저장
 		Image image = imageUploadDto.toEntity(imageFileName,principalDetails.getUser());
-		Image imageEntity = imageRepository.save(image);
+		imageRepository.save(image);
 		
-		System.out.println("imageEntity : "+imageEntity);
+		//System.out.println("imageEntity : "+imageEntity);
 		
 	}
 }

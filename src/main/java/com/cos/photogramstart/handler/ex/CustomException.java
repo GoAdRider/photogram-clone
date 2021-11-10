@@ -9,7 +9,7 @@ public class CustomException extends RuntimeException{
 	//찾는 프로필 페이지가 없을때 보내는 익셉션 ( UserService.java 의 회원프로필() )
 	public CustomException(String message) {
 		super(message);
-		System.out.println("CustomException 호출");
+//		System.out.println("CustomException 호출");
 	}
 	
 }

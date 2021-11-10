@@ -24,7 +24,7 @@ function update(userId, event) {
 		if(error.data==null){//500번대 에러(데이터가 넘어오지 않았을 때)
 			alert(error.responseJSON.message);
 		}else{//400번대 에러(요청을 잘 못했을 때)
-			alert(JSON.stringify(error.responseJSON.errorMap));
+			alert(JSON.stringify(error.responseJSON.data));
 		}
 	});
 }

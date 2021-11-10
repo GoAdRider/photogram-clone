@@ -12,12 +12,12 @@ public class CustomValidationException extends RuntimeException{
 	public CustomValidationException(String message, Map<String, String> errorMap) {
 		super(message);
 		this.errorMap = errorMap;
-		System.out.println("CustomValidationException 호출");
+//		System.out.println("CustomValidationException 호출");
 	}
 	
 	public CustomValidationException(String message) {
 		super(message);
-		System.out.println("CustomValidationException 호출");
+//		System.out.println("CustomValidationException 호출");
 	}
 	
 	public Map<String, String> getErrorMap() {
