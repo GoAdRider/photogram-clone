@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
 import com.cos.photogramstart.domain.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +32,7 @@ public class Image {	// User 와의 관계 : Image --(Many2One) --> User
 	private String postImageUrl; 	// 사진을 전송받아서 그 사진을 서버에 특정 폴더에 저장 - DB 에 그 저장된 경로를 Insert !
 	
 	@JoinColumn(name="userId")
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private User user; // 객체가 들어왔으니 연관관계 정해주기
 	
 	// 기능 업데이트 할 사항
@@ -48,6 +47,7 @@ public class Image {	// User 와의 관계 : Image --(Many2One) --> User
 	}
 
 	// 오브젝트를 콘솔에 출력할 때 문제가 될수 있기에 User 부분을 출력되지 않게 함. user 변수 제외함
+	// 무한참조(user <-> images)
 //	@Override
 //	public String toString() {
 //		return "Image [id=" + id + ", caption=" + caption + ", postImageUrl=" + postImageUrl
